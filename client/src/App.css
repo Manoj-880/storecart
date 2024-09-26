@@ -1,10 +1,10 @@
 :root{
-  --primary: "#007BFF";
-  --secondary: "#6C757D";
-  --background: "#ffffff";
-  --text: "#212529";
-  --grey: "#F8F9FA";
-  --darkgrey: "#CCCCCC";
+  --primary: #007BFF;
+  --secondary: #6C757D;
+  --background: #ffffff;
+  --text: #212529;
+  --grey: #F8F9FA;
+  --darkgrey: #CCCCCC;
 }
 
 /* login */
@@ -36,24 +36,102 @@
 }
 
 .login-image img{
-  width: 100%;
+  width: 90%;
 }
 
 .login-form{
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   width: 40%;
   background-color: var(--background);
 }
 
-.login-head{
-  font-size: medium;
+.content{
+  margin-top: 5vh;
 }
 
-.login-form{
+.login-head{
+  font-size: 1.5vw;
+  color: var(--text);
+  margin-bottom: 5vh;
+}
+
+.form{
   display: flex;
   flex-direction: column;
   gap: 1vh;
 }
+
+.input{
+  border: 0.5px solid var(--darkgrey);
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 0.3vw 0.1vw 0.3vw 0.5vw;
+  margin-bottom: 0.3vh;
+}
+
+.input input{
+  border: none;
+  width: 100%;
+  outline: none;
+  color: var(--text);
+  box-shadow: none; 
+}
+
+.input input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.input input::placeholder{
+  color: var(--darkgrey);
+  font-size: 0.9vw;
+}
+
+.input .eye{
+  width: 2vw;
+  height: 3.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.form button{
+  background-color: var(--primary);
+  border: 1px solid transparent;
+  padding: 0.5vh;
+  margin-top: 2vh;
+  border-radius: 5px;
+  font-weight: 600;
+  color: var(--background);
+  transition: 200ms;
+}
+
+.form button:hover{
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.note{
+  font-size: 0.8vw;
+  color: var(--text);
+  text-align: end;
+  margin-top: 1vh;
+}
+
+.note span{
+  color: var(--primary);
+  font-size: 0.9vw;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* register */
+
