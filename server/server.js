@@ -1,37 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+
 const db = require('./utils/dbConfig');
 const constants = require('./constants');
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// Test route
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
+const filePath = path.join(__dirname, "logs", "request.log");
+const accessLogStream = fs.createWriteStream(filePath, { flags: 'a' });
 
-// Example route to get data from MySQL
-app.get('/users', (req, res) => {
-    const sql = 'SELECT * FROM users';
-    db.query(sql, (err, result) => {
-        if (err) {
-            return res.status(500).send(err);
-        }
-        res.json(result);
-    });
-});
 
-// Example route to add a user
 app.get('/test', (req, res) => {
     res.status(200).send('Api working successfully');
 });
 
-// Start the server
+// Routes
+const login = require('./routes/loginRoutes');
+
+// Endpoints
+app.use('/api/login', login);
+
 app.listen(constants.PORT, () => {
     console.log(`Server is running on http://localhost:${constants.PORT}`);
 });
