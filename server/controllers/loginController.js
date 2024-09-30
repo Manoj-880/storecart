@@ -18,7 +18,12 @@ const login = async (req, res) => {
                     message: "Invalid credentials",
                 });
             };
-        };
+        } else {
+            res.status(200).send({
+                success: false,
+                message: "Owner not found",
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send({
@@ -33,7 +38,17 @@ const register = async (req, res) => {
         let mobile_number = req.body.mobile_number;
         let password = req.body.password;
         let registration = await storeOwnerQueries.addOwner({mobile_number, password});
-        res.send(registration);
+        if(registration.success){
+            res.status(200).send({
+                success: true,
+                message: registration.message,
+            });
+        } else {
+            res.status(200).send({
+                success: false,
+                message: registration.message,
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send({

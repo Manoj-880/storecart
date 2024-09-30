@@ -29,9 +29,6 @@ const getOwnerByMobile = async (mobile) => {
     try {
         const query = 'SELECT * FROM storeOwners WHERE mobile_number = ?';
         const [rows] = await db.promise().query(query, [mobile]);
-        if(rows.length === 0) {
-            return "Owner not found";
-        }
         return rows[0];
     } catch (err) {
         return "Database Error: " + err.message;
@@ -45,9 +42,15 @@ const addOwner = async (ownerData) => {
         const [result] = await db.promise().query(query, [mobile_number, password]);
 
         if (result.affectedRows === 1) {
-            return 'Owner added successfully';
+            return {
+                success: true,
+                message: 'Owner added successfully'
+            };
         } else {
-            return 'Failed to add owner';
+            return {
+                suc: false,
+                message: 'Failed to add owner'
+            };
         }
     } catch (err) {
         return "Database Error: " + err.message;

@@ -4,49 +4,56 @@ import { faEye, faEyeSlash, faMobile } from '@fortawesome/free-solid-svg-icons';
 import loginImage from "../assets/login_image.svg"; // Import login image
 import logo from "../assets/logo.svg"; // Import logo image
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { login } from '../api_calls/login';
+import {message} from 'antd';
 
 const Login = () => {
-    let navigate = useNavigate(); // Initialize navigation hook to use for routing
+    let navigate = useNavigate(); 
 
-    // State to hold form input values (mobile number and password)
     const [formData, setFormData] = useState({
         mobileNumber: '',
         password: '',
     });
 
-    // State to manage the visibility of the password (show/hide password)
     const [showPassword, setShowPassword] = useState(false);
 
-    // Handle input changes and update the form data state
     const handleInputChange = (e) => {
-        const { name, value } = e.target; // Destructure name and value from the event target
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value, // Update the specific field (mobileNumber or password) with the new value
+            [name]: value,
         });
     };
 
-    // Handle navigation to the Register page when the user clicks "Register here"
     const handleNavigate = () => {
-        navigate('/register'); // Navigate to the '/register' route
+        navigate('/register');
     }
 
-    // Handle form submission (when user clicks on "Login" button)
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        console.log('Mobile Number:', formData.mobileNumber); // Log the mobile number to the console
-        console.log('Password:', formData.password); // Log the password to the console
-
-        // Reset the form data after submission
-        setFormData({
-            mobileNumber: "",
-            password: "",
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let response = await login({
+            mobile_number: Number(formData.mobileNumber),
+            password: formData.password,
         });
+        if(response.success){
+            setFormData({
+                mobileNumber: "",
+                password: "",
+            });
+            const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+            sessionStorage.setItem('userData', JSON.stringify({
+                data: response.data,
+                expiration: expirationTime
+            }));
+            message.success(response.message);
+            navigate('/');
+        } else {
+            message.error(response.message);
+        };
     };
 
-    // Toggle the visibility of the password (show/hide password)
     const handleShowPassword = () => {
-        setShowPassword(!showPassword); // Invert the boolean state for showing password
+        setShowPassword(!showPassword);
     }
 
     return (

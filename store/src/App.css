@@ -7,6 +7,24 @@
   --darkgrey: #CCCCCC;
 }
 
+::-webkit-scrollbar {
+  width: 0px; 
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
 /* login */
 
 .login{
@@ -134,5 +152,80 @@
   cursor: pointer;
 }
 
-/* register */
+/* main page css */
 
+.main{
+  padding: 1vh;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--grey);
+}
+
+/* side nav bar css */
+
+.side-nav{
+  height: 100%;
+}
+
+.side{
+  height: 100%;
+  background-color: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 1vw;
+  padding: 5vh 0;
+  overflow-y: scroll;
+}
+
+.brand{
+  padding: 0 2vw;
+  display: flex;
+  justify-content: center;
+}
+
+.brand img{
+  width: 8vw;
+}
+
+.nav-list{
+  margin-top: 5vh;
+}
+
+.nav-item {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text);
+  text-decoration: none;
+  padding: 2vh 1vw;
+  transition: background-color 0.2s ease;
+  margin-bottom: 0.2vh;
+}
+
+.nav-item p{
+  margin-bottom: 0;
+  font-size: 2vh;
+}
+
+.nav-item .icon{
+  font-size: 2vh;
+}
+
+.nav-item:hover {
+  background-color: var(--grey); 
+}
+
+.nav-item:hover .icon{
+  color: var(--primary);
+}
+
+.nav-item .icon, .nav-item .link-name {
+  background-color: transparent;
+}
+
+.active{
+  background-color: var(--grey);
+  border-right: 2px solid var(--primary);
+}

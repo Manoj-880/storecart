@@ -17,6 +17,11 @@ app.use(cors());
 const filePath = path.join(__dirname, "logs", "request.log");
 const accessLogStream = fs.createWriteStream(filePath, { flags: 'a' });
 
+app.use(morgan(':method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
+app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/test', (req, res) => {
     res.status(200).send('Api working successfully');

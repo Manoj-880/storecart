@@ -5,22 +5,20 @@ import signupImage from "../assets/signup.svg";
 import logo from "../assets/logo.svg";
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd'; // Import Ant Design's message component
+import { register } from '../api_calls/login';
 
 const Register = () => {
     let navigate = useNavigate();
 
-    // State to hold form input values (mobile number, password, confirmPassword)
     const [formData, setFormData] = useState({
         mobileNumber: '',
         password: '',
-        confirmPassword: '', // Add confirmPassword field
+        confirmPassword: '', 
     });
 
-    // State to manage the visibility of the password (show/hide password)
     const [showPassword, setShowPassword] = useState(false);
     const [confirmShowPassword, setConfirmShowPassword] = useState(false);
 
-    // Handle input changes and update the form data state
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -29,30 +27,31 @@ const Register = () => {
         });
     };
 
-    // Handle navigation to the Register page when the user clicks "Register here"
     const handleNavigate = () => {
         navigate('/login');
     }
 
-    // Handle form submission (when user clicks on "Login" button)
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if the password and confirmPassword fields match
         if (formData.password !== formData.confirmPassword) {
             message.error('Passwords do not match!'); // Show Ant Design error message
         } else {
-            console.log('Mobile Number:', formData.mobileNumber);
-            console.log('Password:', formData.password);
-
-            // Proceed with the registration process (e.g., API call)
-
-            // Reset the form data after submission
-            setFormData({
-                mobileNumber: "",
-                password: "",
-                confirmPassword: "", // Clear confirmPassword as well
+            let response = await register({
+                mobile_number: Number(formData.mobileNumber),
+                password: formData.password,
             });
+            if(response.success){
+                setFormData({
+                    mobileNumber: "",
+                    password: "",
+                    confirmPassword: ""
+                });
+                message.success(response.message);
+                navigate('/');
+            } else {
+                message.error(response.message);
+            };
         }
     };
 
