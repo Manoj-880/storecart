@@ -159,6 +159,14 @@
   width: 100vw;
   height: 100vh;
   background-color: var(--grey);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1vh;
+}
+
+.main-body{
+  width: 82vw;
 }
 
 /* side nav bar css */
@@ -228,4 +236,77 @@
 .active{
   background-color: var(--grey);
   border-right: 2px solid var(--primary);
+}
+
+/* header css */
+
+.header{
+  background-color: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 1vw;
+  padding: 1vh 0.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1vw;
+}
+
+.header-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-icon .menu{
+  font-size: xx-large;
+}
+
+.menu-icon{
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey);
+  color: var(--primary);
+  border-radius: 0.8vw;
+}
+
+.header-note h2{
+  font-size: 1.5vw;
+  color: var(--primary);
+}
+
+.button{
+  height: 3vw;
+  width: 3vw;
+  background-color: var(--grey);
+  color: var(--primary);
+  border-radius: 0.8vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .notification-button {
+    position: relative; /* To position the dot relative to the notification icon */
+}
+
+.header .notification-button::after {
+    content: '';
+    position: absolute;
+    top: 0; /* Adjust to position the dot */
+    right: 0; /* Adjust to position the dot */
+    width: 10px; /* Size of the dot */
+    height: 10px; /* Size of the dot */
+    background-color: red; /* Color of the dot */
+    border-radius: 50%; /* Make the dot circular */
+    border: 2px solid white; /* Optional: White border around the dot */
 }

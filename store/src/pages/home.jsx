@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SideNavBar from '../components/sideNav';
 import { useLocation } from 'react-router-dom';
+import Header from '../components/header';
 
 const Home = () => {
   let [navActive, setNavActive] = useState(1);
@@ -56,6 +57,11 @@ const Home = () => {
     <div className="main col-sm-12">
       <div className="side-nav col-sm-2">
         <SideNavBar navActive={navActive} setNavActive={setNavActive} />
+      </div>
+      <div className="col-sm-10">
+        <div className="main-body">
+          <Header/>
+        </div>
       </div>
     </div>
   )
