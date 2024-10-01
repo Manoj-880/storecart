@@ -5,6 +5,7 @@
   --text: #212529;
   --grey: #F8F9FA;
   --darkgrey: #CCCCCC;
+  --shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 ::-webkit-scrollbar {
@@ -178,7 +179,7 @@
 .side{
   height: 100%;
   background-color: var(--background);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: var(--shadow);
   border-radius: 1vw;
   padding: 5vh 0;
   overflow-y: scroll;
@@ -238,11 +239,15 @@
   border-right: 2px solid var(--primary);
 }
 
+.active .icon{
+  color: var(--primary);
+}
+
 /* header css */
 
 .header{
   background-color: var(--background);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: var(--shadow);
   border-radius: 1vw;
   padding: 1vh 0.5vw;
   display: flex;
@@ -293,20 +298,120 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .header .notification-button {
-    position: relative; /* To position the dot relative to the notification icon */
+    position: relative;
 }
 
 .header .notification-button::after {
     content: '';
     position: absolute;
-    top: 0; /* Adjust to position the dot */
-    right: 0; /* Adjust to position the dot */
-    width: 10px; /* Size of the dot */
-    height: 10px; /* Size of the dot */
-    background-color: red; /* Color of the dot */
-    border-radius: 50%; /* Make the dot circular */
-    border: 2px solid white; /* Optional: White border around the dot */
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red; 
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.component{
+  padding: 1vh 0;
+  height: 89.2vh;
+}
+
+/* dashboard css */
+
+.dashboard{
+  display: flex;
+  gap: 0.5vw;
+}
+
+.details{
+  background-color: var(--background);
+  padding: 2vw;
+  border-radius: 1vw;
+  box-shadow: var(--shadow);
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  gap: 9vh;
+}
+
+.profit-data{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profit{
+  background-color: var(--grey);
+  margin: 0.2rem;
+  padding: 2vh;
+  border-radius: 1vw;
+  width: 96%;
+}
+
+.profit .profit-head{
+  font-size: small;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.profit .amount{
+  font-size: xx-large;
+  color: var(--primary);
+  margin: 0;
+}
+
+.sales-chart{
+  /* margin-top: 5vh; */
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+}
+
+.sales-chart h3{
+  font-size: medium;
+  text-align: center;
+  color: var(--text);
+}
+
+.profit-table-data{
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.stock-data{
+  background-color: var(--background);
+  width:120.5%;
+  border-radius: 1vw;
+  padding: 1vw;
+  box-shadow: var(--shadow);
+  height: 43.5vh;
+}
+
+.profit-table-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--text);
+}
+
+.profit-table-head .head{
+  font-size: medium;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.profit-table-head .link{
+  font-size: small;
+  color: var(--primary);
+  text-decoration: underline;
+  margin: 0;
+  cursor: pointer;
 }

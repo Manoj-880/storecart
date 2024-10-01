@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import SideNavBar from '../components/sideNav';
-import { useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from '../components/header';
+import Dashboard from './dashboard';
+import Stores from './stores';
+import Orders from './orders';
+import Bills from './bills';
+import Stock from './stock';
+import Employees from './employees';
+import Categories from './categories';
+import Products from './products';
+import Customers from './customers';
+import Analytics from './analytics';
 
 const Home = () => {
   let [navActive, setNavActive] = useState(1);
@@ -61,6 +71,20 @@ const Home = () => {
       <div className="col-sm-10">
         <div className="main-body">
           <Header/>
+        </div>
+        <div className="component col-sm-12">
+          <Routes>
+            <Route path='/' element={<Dashboard/>}/>
+            <Route path='/stores' element={<Stores/>}/>
+            <Route path='/orders' element={<Orders/>}/>
+            <Route path='/bills' element={<Bills/>}/>
+            <Route path='/stock' element={<Stock/>}/>
+            <Route path='/employees' element={<Employees/>}/>
+            <Route path='/categories' element={<Categories/>}/>
+            <Route path='/products' element={<Products/>}/>
+            <Route path='/customers' element={<Customers/>}/>
+            <Route path='/analytics' element={<Analytics/>}/>
+          </Routes>
         </div>
       </div>
     </div>

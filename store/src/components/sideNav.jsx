@@ -10,10 +10,11 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import { useNavigate } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 
 const SideNavBar = ({navActive, setNavActive}) => {
-
+    const navigate = useNavigate();
     const navItems = [
         {
             id: 1,
@@ -48,7 +49,7 @@ const SideNavBar = ({navActive, setNavActive}) => {
         {
             id: 6,
             name: 'Employees',
-            path: '/employes',
+            path: '/employees',
             icon: <Groups3OutlinedIcon/>,
         },
         {
@@ -82,8 +83,9 @@ const SideNavBar = ({navActive, setNavActive}) => {
         inactive: 'nav-item',
     }
 
-    const handleOnClick = (id) => {
+    const handleOnClick = (id, path) => {
         setNavActive(id);
+        navigate(path);
     }
 
     return (
@@ -93,7 +95,7 @@ const SideNavBar = ({navActive, setNavActive}) => {
             </div>
             <div className="nav-list">
                 {navItems.map((navItem) => (
-                    <div key={navItem.id} className={navItem.id === navActive ? navStyle.active : navStyle.inactive} onClick={() => handleOnClick(navItem.id)}>
+                    <div key={navItem.id} className={navItem.id === navActive ? navStyle.active : navStyle.inactive} onClick={() => handleOnClick(navItem.id, navItem.path)}>
                         <p className="icon">{navItem.icon}</p>
                         <p className="link-name">{navItem.name}</p>
                     </div>
