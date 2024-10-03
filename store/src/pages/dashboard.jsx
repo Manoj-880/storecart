@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import NorthIcon from '@mui/icons-material/North';
 import SouthIcon from '@mui/icons-material/South';
+import {hemoScreenData} from '../api_calls/homescreen_api';
 
 // Register chart.js components
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -17,34 +18,41 @@ const Dashboard = () => {
     let [bills, setBills] = useState([]);
 
     useEffect(() => {
-        setProfitsData({
-            today: 8243,
-            yesterday: 6515,
-            thisWeek: 15861,
-            lastWeek: 65153,
-            thisMonth: 122587,
-            lastMonth: 681968,
-        });
-        setSalesData({
-            date: ['01/10/2024', '02/10/2024', '03/10/2024', '04/10/2024', '05/10/2024'],
-            amount: [60845, 70000, 65412, 102500, 40528],
-        });
-        setBills([
-            {bill_id: 'SC0025', customer: 'Name 1', aount: 216},
-            {bill_id: 'SC0024', customer: 'Name 2', aount: 5000},
-            {bill_id: 'SC0023', customer: 'Name 3', aount: 581},
-            {bill_id: 'SC0022', customer: 'Name 4', aount: 158},
-            {bill_id: 'SC0021', customer: 'Name 5', aount: 65},
-        ])
-        const initialStock = [
-            { productName: "Clinic +", available: 40 },
-            { productName: "Coalgate", available: 10 },
-            { productName: "Santoor", available: 5 },
-            { productName: "Toordall", available: 20 },
-            { productName: "Plain note book", available: 2 },
-        ]
-        const sortedStock = initialStock.sort((a, b) => a.available - b.available);
-            setStock(sortedStock);
+        const fetchHomescreenData = async () => {
+            let homeData = await hemoScreenData(1);
+            
+            setProfitsData({
+                today: homeData.data.salesData[0].todays_sales,
+                yesterday: homeData.data.salesData[0].yesterdays_sales,
+                thisWeek: homeData.data.salesData[0].this_week_sales,
+                lastWeek: homeData.data.salesData[0].last_week_sales,
+                thisMonth: homeData.data.salesData[0].this_month_sales,
+                lastMonth: homeData.data.salesData[0].last_month_sales,
+            });
+
+            const initialStock = homeData.data.stockData
+            const sortedStock = initialStock.sort((a, b) => a.available - b.available);
+                setStock(sortedStock);
+
+            const dates = homeData.data.dailySalesData.map((entry) => {
+                const date = new Date(entry.sales_date);
+                return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;  // Format to DD/MM/YYYY
+            });
+            
+            const amounts = homeData.data.dailySalesData.map((entry) => entry.daily_sales);
+
+            setSalesData({
+                date: dates,
+                amount: amounts,
+            });
+
+            const billsData = homeData.data.recentBillsData;
+            setBills(billsData);
+
+            return homeData.data;
+        }
+
+        fetchHomescreenData();
     }, [setProfitsData]);
 
     let formatAmount = (amount) => {
@@ -163,7 +171,7 @@ const Dashboard = () => {
                                 <tbody>
                                     {stock.map((item, index) => (
                                         <tr key={index}>
-                                            <td>{item.productName}</td>
+                                            <td>{`${item.product_name} - ₹${item.price}.00`}</td>
                                             <td style={{textAlign: 'end'}}>{item.available} <span style={{ color: item.available > 10 ? 'Yellow' : 'red'}}> <FiberManualRecordIcon/></span></td>
                                         </tr>
                                     ))}
@@ -183,9 +191,9 @@ const Dashboard = () => {
                                 <tbody>
                                     {bills.map((item, index) => (
                                         <tr key={index}>
-                                            <td>{item.bill_id}</td>
-                                            <td>{item.customer}</td>
-                                            <td>{item.amount}</td>
+                                            <td>{item.bills_id}</td>
+                                            <td>{item.customer_name}</td>
+                                            <td>{item.total_price_sum}</td>
                                         </tr>
                                     ))}
                                 </tbody>

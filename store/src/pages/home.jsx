@@ -47,21 +47,21 @@ const Home = () => {
       case '/customers':
         setNavActive(9);
         break;
-      case 'analytics':
+      case '/analytics':
         setNavActive(10);
         break;
       default:
         setNavActive(1);
         break;
-    }
+    };
   },[location.pathname]);
 
   const signinCheck = async () => {
     let status = await window.sessionStorage.getItem('userData');
     if(!status){
       window.location.replace('/login')
-    }
-  }
+    };
+  };
 
   return (
     <div className="main col-sm-12">
