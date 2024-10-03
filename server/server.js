@@ -29,9 +29,11 @@ app.get('/test', (req, res) => {
 
 // Routes
 const login = require('./routes/loginRoutes');
+const homescreen = require('./routes/homeRoute');
 
 // Endpoints
 app.use('/api/login', login);
+app.use('/api/homescreen', homescreen);
 
 app.listen(constants.PORT, () => {
     console.log(`Server is running on http://localhost:${constants.PORT}`);

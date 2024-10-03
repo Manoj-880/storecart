@@ -18,3 +18,4 @@ POST /api/login/register 200 53 195.145 ms
 POST /api/login 200 142 4.047 ms
 POST /api/login 200 166 11.018 ms
 POST /api/login 200 166 27.755 ms
+GET /api/homescreen/1 200 709 57.474 ms
