@@ -93,7 +93,7 @@
   margin-bottom: 0.3vh;
 }
 
-.input input{
+.input input, .input textarea{
   border: none;
   width: 100%;
   outline: none;
@@ -101,13 +101,13 @@
   box-shadow: none; 
 }
 
-.input input:focus {
+.input input:focus, .input textarea:focus {
   border: none;
   outline: none;
   box-shadow: none;
 }
 
-.input input::placeholder{
+.input input::placeholder, .input textarea::placeholder{
   color: var(--darkgrey);
   font-size: 0.9vw;
 }
@@ -370,7 +370,7 @@
   /* margin-top: 5vh; */
   display: flex;
   flex-direction: column;
-  gap: 4vh;
+  gap: 1vh;
 }
 
 .sales-chart h3{
@@ -414,4 +414,134 @@
   text-decoration: underline;
   margin: 0;
   cursor: pointer;
+}
+
+/* stores css */
+
+.stores{
+  padding: 0 10px 0 0;
+  height: 88vh;
+}
+
+.store-content{
+  background-color: var(--background);
+  height: 100%;
+  border-radius: 1vw;
+  box-shadow: var(--shadow);
+  padding: 2vh 2vw;
+}
+
+.store-heading{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid var(--text);
+}
+
+.store-heading .heading-text{
+  font-size: 1.2vw;
+}
+
+.store-heading .store-button{
+  border: 2px solid transparent;
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  border-radius: 0.3vw;
+  padding: 0.1rem 1rem;
+  transition: 0.5s;
+}
+
+.store-heading .store-button:hover{
+  border: 2px solid var(--primary);
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.store-button p{
+  margin: 0 0 0.15rem 0;
+  font-size: medium;
+}
+
+.storeList{
+  margin-top: 1vh;
+  display: flex;
+  gap: 2vw;
+}
+
+.store-container{
+  width: 100%;
+  /* height: 33vh; */
+  background-color: var(--grey);
+  border: 0.2px solid #ccc;
+  border-radius: 3vh;
+  padding: 2vh 0 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.storeImage{
+  width: 15vw;
+}
+
+.store-data{
+  background-color: var(--background);
+  padding: 0 1vw;
+  height: 60%;
+}
+
+.data-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.data-head .actions{
+  display: flex;
+  gap: 0.3rem;
+}
+
+.data-head .location-icon{
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  border-radius: 2rem;
+  color: var(--background);
+  cursor: pointer;
+}
+
+.data-head .name{
+  margin: 0;
+}
+
+.address{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin-top: 1rem;
+}
+
+.label{
+  font-size: 0.8vw;
+  font-weight: bold;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.address-data{
+  font-size: 0.8vw;
+  font-weight: normal;
+  color: var(--text);
 }

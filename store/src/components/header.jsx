@@ -17,7 +17,8 @@ const Header = () => {
     useEffect(() => {
         let userDataString = window.sessionStorage.getItem('userData');
         if (userDataString) {
-            setUserData(JSON.parse(userDataString));
+            let parsedData = JSON.parse(userDataString).data;
+            setUserData(parsedData);
         }
         setNotifications([]);
     }, []);

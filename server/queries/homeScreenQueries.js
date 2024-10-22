@@ -12,7 +12,7 @@ const stockAlertQuery = async (id) => {
 
 const getRecentBillsQuery = async (id) => {
     try {
-        const query = 'SELECT b.bills_id, c.customer_name, SUM(b.total_price) AS total_price_sum FROM bills b JOIN customers c ON b.customer_id = c.customer_id WHERE b.store_id = ? GROUP BY b.bills_id, c.customer_name';
+        const query = `SELECT bills_id, customer_name, total_price_sum FROM (SELECT b.bills_id, c.customer_name, SUM(b.total_price) AS total_price_sum, b.created_at FROM bills b JOIN customers c ON b.customer_id = c.customer_id WHERE b.store_id = ? GROUP BY b.bills_id, c.customer_name, b.created_at) AS grouped_bills ORDER BY created_at DESC LIMIT 5`;
         const [rows] = await db.promise().query(query, [id]);
         return rows;
     } catch (error) {
