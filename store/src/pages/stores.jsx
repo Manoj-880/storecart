@@ -5,7 +5,7 @@ import { Modal, Button, message } from 'antd'; // Import Modal and Button from a
 import storeImage from '../assets/store.svg';
 import 'antd/dist/reset.css'; // Ensure Ant Design styles are loaded
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-import { addStore, getStoreByOwnerid } from '../api_calls/store_api';
+import { addStore, getStoreByOwnerid, update } from '../api_calls/store_api'; // Import updateStore function
 import Map from '../components/map';
 import LocationPicker from '../components/locationPicker'; // Import the LocationPicker
 
@@ -15,6 +15,7 @@ const Stores = () => {
   let [isModalVisible, setIsModalVisible] = useState(false);
   let [selectedLocation, setSelectedLocation] = useState('');
   let [addStoreModal, setAddStoreModal] = useState(false);
+  let [editStoreModal, setEditStoreModal] = useState(false); // State for Edit Modal
   let [storeFormData, setStoreFormData] = useState({
     store_name: '',
     location: '',
@@ -24,26 +25,24 @@ const Stores = () => {
 
   useEffect(() => {
     let userDataString = window.sessionStorage.getItem('userData');
-        if (userDataString) {
-            let parsedData = JSON.parse(userDataString).data;
-            setUserDetails(parsedData);
-        }
+    if (userDataString) {
+      let parsedData = JSON.parse(userDataString).data;
+      setUserDetails(parsedData);
+    }
     fetchStores();
-  }, [setStoresList]);
-  
-  let fetchStores = async () => {
+  }, []);
+
+  const fetchStores = async () => {
     let userData = await JSON.parse(window.sessionStorage.getItem('userData'));
     let stores = await getStoreByOwnerid(userData.data.owner_id);
     setStoresList(stores.data);
   };
 
-  // Function to handle the modal open
   const showModal = (location) => {
     setSelectedLocation(location);
     setIsModalVisible(true);
   };
 
-  // Function to close the modal
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -62,6 +61,11 @@ const Stores = () => {
     });
   };
 
+  const toggleEditStoreModal = (storeData) => {
+    setEditStoreModal(!editStoreModal);
+    setStoreFormData(storeData); // Pre-fill form with store data for editing
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStoreFormData({
@@ -74,9 +78,7 @@ const Stores = () => {
     e.preventDefault();
     setAddStoreModal(!addStoreModal);
     let response = await addStore(storeFormData);
-    console.log('response');
-    console.log(response);
-    if(response.success){
+    if (response.success) {
       message.success(response.message);
       fetchStores();
       setStoreFormData({
@@ -87,21 +89,32 @@ const Stores = () => {
       });
     } else {
       message.error(response.message);
-    };
+    }
   };
 
-  // Function to handle location selection from the map
+  const handleUpdateStore = async (e) => {
+    e.preventDefault();
+    setEditStoreModal(!editStoreModal);
+    let response = await update(storeFormData); 
+    console.log(response);
+    if (response.success) {
+      message.success(response.message);
+      fetchStores();
+    } else {
+      message.error(response.message);
+    }
+  };
+
   const handleLocationSelect = (lat, lng) => {
     const locationString = `${lat}, ${lng}`;
     setStoreFormData({
       ...storeFormData,
-      location: locationString, // Store lat, long as a string
+      location: locationString,
     });
   };
 
-  // Function to generate navigation URL for Google Maps
   const getNavigationURL = (location) => {
-    const [lat, lng] = location.split(','); // Extract lat and lng from the string
+    const [lat, lng] = location.split(',');
     return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
   };
 
@@ -126,7 +139,7 @@ const Stores = () => {
                     <div className="location-icon" onClick={() => showModal(item.location)}>
                       <NearMeOutlinedIcon />
                     </div>
-                    <div className="location-icon">
+                    <div className="location-icon" onClick={() => toggleEditStoreModal(item)}>
                       <EditNoteOutlinedIcon />
                     </div>
                   </div>
@@ -141,7 +154,6 @@ const Stores = () => {
         </div>
       </div>
 
-      {/* Modal for showing Google Maps and navigation button */}
       <Modal
         title="Store Location"
         open={isModalVisible}
@@ -156,18 +168,16 @@ const Stores = () => {
         <Map selectedLocation={selectedLocation} />
       </Modal>
 
-      {/* Modal for adding a store */}
       <Modal
         title="Add Store"
         open={addStoreModal}
         onCancel={toggleAddStoreModal}
-        footer={null} // No footer buttons, using form submission
+        footer={null}
       >
         <form onSubmit={handleAddStore} className="form">
           <div className="input">
             <input
               type="text"
-              id="store_name"
               name="store_name"
               placeholder="Enter your store name"
               value={storeFormData.store_name}
@@ -175,11 +185,8 @@ const Stores = () => {
               required
             />
           </div>
-
           <div className="input">
             <textarea
-              type="text"
-              id="address"
               name="address"
               placeholder="Enter your Address"
               value={storeFormData.address}
@@ -187,12 +194,43 @@ const Stores = () => {
               required
             />
           </div>
-
           <div className="input">
             <LocationPicker onLocationSelect={handleLocationSelect} />
           </div>
-
           <button type="submit">Add Store</button>
+        </form>
+      </Modal>
+
+      <Modal
+        title="Edit Store"
+        open={editStoreModal}
+        onCancel={() => setEditStoreModal(false)}
+        footer={null}
+      >
+        <form onSubmit={handleUpdateStore} className="form">
+          <div className="input">
+            <input
+              type="text"
+              name="store_name"
+              placeholder="Enter your store name"
+              value={storeFormData.store_name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="input">
+            <textarea
+              name="address"
+              placeholder="Enter your Address"
+              value={storeFormData.address}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="input">
+            <LocationPicker onLocationSelect={handleLocationSelect} />
+          </div>
+          <button type="submit">Update Store</button>
         </form>
       </Modal>
     </div>

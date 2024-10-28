@@ -31,7 +31,7 @@ const Dashboard = () => {
             });
 
             const initialStock = homeData.data.stockData
-            const sortedStock = initialStock.sort((a, b) => a.available - b.available);
+            const sortedStock = initialStock.sort((a, b) => a.inventory - b.inventory);
                 setStock(sortedStock);
 
             const dates = homeData.data.dailySalesData.map((entry) => {
@@ -172,7 +172,7 @@ const Dashboard = () => {
                                     {stock.map((item, index) => (
                                         <tr key={index}>
                                             <td>{`${item.product_name} - ₹${item.price}.00`}</td>
-                                            <td style={{textAlign: 'end'}}>{item.available} <span style={{ color: item.available > 10 ? 'Yellow' : 'red'}}> <FiberManualRecordIcon/></span></td>
+                                            <td style={{textAlign: 'end'}}>{item.inventory} <span style={{ color: item.inventory > 10 ? 'Yellow' : 'red'}}> <FiberManualRecordIcon/></span></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -192,7 +192,7 @@ const Dashboard = () => {
                                     {bills.map((item, index) => (
                                         <tr key={index}>
                                             <td>{item.bills_id}</td>
-                                            <td>{item.customer_name}</td>
+                                            <td>{item.name}</td>
                                             <td>{item.total_price_sum}</td>
                                         </tr>
                                     ))}

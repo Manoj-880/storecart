@@ -28,8 +28,18 @@ const addStore = async (data) => {
     };
 };
 
+const update = async (data) => {
+    try {
+        let response = await axios.put(`${base_url}/store/update`, data);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export {
     getAllStores,
     getStoreByOwnerid,
     addStore,
+    update,
 }
